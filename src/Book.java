@@ -6,6 +6,8 @@ public class Book implements Comparable<Book> {
         if (id < 0)
             throw new IllegalArgumentException();
         setId(id);
+        if (title.isBlank())
+            throw new IllegalArgumentException("Name of the book with ID \'" + this.getId() + "\' can not be blank!");
         setTitle(title);
     }
 

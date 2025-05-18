@@ -9,6 +9,10 @@ public class BinarySearchTree {
     }
 
     private Node insertHelper(Node root, Book book) {
+        if (search(book.getId()))
+            throw new IllegalArgumentException("ID \'" + book.getId() + "\' of the book is already in use!");
+        if (search(book.getTitle()))
+            throw new IllegalArgumentException("Name \"" + book.getTitle() + "\" of the book is already in use!");
         if (root == null)
             return new Node(book);
         else if(book.compareTo(root.getBook()) < 0)
@@ -35,6 +39,10 @@ public class BinarySearchTree {
         return searchHelper(root, key);
     }
 
+    public boolean search(String key) {
+        return searchHelper(root, key);
+    }
+
     private boolean searchHelper(Node root, int key) {
         if (root == null)
             return false;
@@ -43,6 +51,16 @@ public class BinarySearchTree {
         if (root.getBook().getId() < key)
             return searchHelper(root.getRight(), key);
         return searchHelper(root.getLeft(), key);
+    }
+
+    private boolean searchHelper(Node root, String key) {
+        if (root == null)
+            return false;
+        if (root.getBook().getTitle().equals(key))
+            return true;
+        if (searchHelper(root.getLeft(), key))
+            return true;
+        return searchHelper(root.getRight(), key);
     }
 
     public List<Book> inOrderTraversal() {
